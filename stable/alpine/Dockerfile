@@ -3,6 +3,7 @@ FROM alpine:3.7
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
 ENV NGINX_VERSION 1.12.2
+ENV VTS_MODULE_VERSION 0.1.15
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& CONFIG="\
@@ -86,7 +87,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& tar -zxC /usr/src -f nginx.tar.gz \
 	&& rm nginx.tar.gz \
 	&& cd /usr/src/nginx-$NGINX_VERSION \
-	&& curl -fSL https://github.com/vozlt/nginx-module-vts/archive/v0.1.15.tar.gz -o - | tar -zvxC /usr/src \
+	&& curl -fSL https://github.com/vozlt/nginx-module-vts/archive/v$VTS_MODULE_VERSION.tar.gz -o - | tar -zvxC /usr/src \
 	&& ./configure $CONFIG --with-debug \
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
 	&& mv objs/nginx objs/nginx-debug \
